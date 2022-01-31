@@ -8,9 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    let tools = ["Rock", "Paper", "Scissors"]
+    var selected = Int.random(in: 0..<3)
+    var win = Bool.random()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack{
+            Button(tools[selected]) {}
+            Text(win ? "Win" : "Lose")
+            
+            HStack {
+                Button("Rock") {}
+                Button("Paper") {}
+                Button("Scissors") {}
+            }
+            
+            Text("Your score")
+            Text("0")
+        }
+
     }
 }
 

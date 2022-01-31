@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    let tools = ["Rock", "Paper", "Scissors"]
-    @State var selected = Int.random(in: 0..<3)
-    @State var isWinner = Bool.random()
-    @State var output = "No selection made"
+    let moves = ["Rock", "Paper", "Scissors"]
+    @State private var winnerMove = "None"
+
+    @State private var selected = Int.random(in: 0..<3)
+    @State private var shouldWin = Bool.random()
+    @State private var output = "No selection made"
     
     var body: some View {
         VStack{
-            Button(tools[selected]) {}
-            Text(isWinner ? "Win" : "Lose")
+            Text(moves[selected])
+            Text(shouldWin ? "Win" : "Lose")
             
             HStack {
                 Button("Rock") {
@@ -33,13 +35,31 @@ struct ContentView: View {
             Text("Your score")
             Text("0")
             Text(output)
+            Text(winnerMove)
         }
 
     }
     
     func selectTool(_ tool: String) {
         output = "You've selected \(tool)"
-        selected = Int.random(in: 0..<3)
+        var winningMoves = beating(moves: moves)
+        winnerMove = winningMoves[selected]
+    }
+    
+    func beating(moves: Array<String>) -> Array<String> {
+        var result: [String] = []
+        moves.forEach { move in
+            if(move == "Rock") {
+                result.append("Paper")
+            }
+            else if(move == "Paper") {
+                result.append("Scissors")
+            }
+            else if(move == "Scissors") {
+                result.append("Rock")
+            }
+        }
+        return result
     }
 }
 

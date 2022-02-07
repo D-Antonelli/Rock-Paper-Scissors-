@@ -20,7 +20,7 @@ struct ContentView: View {
     @State private var isGameOver = false;
     @State private var selected = Int.random(in: 0..<3)
     @State private var shouldWin = Bool.random()
-    @State private var userMove = ""
+    @State private var userMove = "❓"
     @State private var output = "Let's Play"
     
     var body: some View {
@@ -32,9 +32,13 @@ struct ContentView: View {
                     .font(.largeTitle)
             HStack() {
                 Text(emoji[moves[selected]]!)
+                    .padding()
                 Text(shouldWin ? "Win" : "Lose")
+                    .padding()
+                    .font(.title)
                 Text(userMove)
-            }.padding(80)
+                    .padding()
+            }.padding(70)
                 
             Text("Select a move")
             HStack {
@@ -61,10 +65,10 @@ struct ContentView: View {
         userMove = move;
         if(shouldWin && move == winningMoves[selected] || !shouldWin && move == losingMoves[selected]) {
             output = "Ooo wow congrats!"
-            score += 5
+            score += 1
         } else {
             output = "Dang! Wrong answer"
-            score -= 5
+            score -= 1
         }
         
         shuffle()
@@ -86,7 +90,7 @@ struct ContentView: View {
         score = 0
         numberOfQuestions = 10
         output = "Let's play"
-        userMove = ""
+        userMove = "❓"
         shuffle()
     }
 

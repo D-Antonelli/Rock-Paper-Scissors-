@@ -7,23 +7,36 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     let moves = ["Rock", "Paper", "Scissors"]
     let winningMoves = ["Paper", "Scissors", "Rock"]
     let losingMoves = ["Scissors", "Rock", "Paper"]
+    
+    let emoji = ["Paper": "🧻", "Rock": "🪨", "Scissors": "✂️"]
     
     @State private var score = 0
     @State private var numberOfQuestions = 10;
     @State private var isGameOver = false;
     @State private var selected = Int.random(in: 0..<3)
     @State private var shouldWin = Bool.random()
-    @State private var output = "Waiting for first move"
+    @State private var userMove = ""
+    @State private var output = "Let's Play"
     
     var body: some View {
         VStack{
-            Text(moves[selected])
-            Text(shouldWin ? "Win" : "Lose")
-            
+            Spacer()
+            Text(output)
+                    .font(.title)
+            Text("Total Score \(score)")
+                    .font(.largeTitle)
+            HStack() {
+                Text(emoji[moves[selected]]!)
+                Text(shouldWin ? "Win" : "Lose")
+                Text(userMove)
+            }.padding()
+                
+            Text("Select a move")
             HStack {
                 Button("Rock") {
                     selectMove("Rock")
@@ -35,9 +48,8 @@ struct ContentView: View {
                     selectMove("Scissors")
                 }
             }
-            
-            Text(output)
-            Text("Your score is \(score)")
+            .padding()
+            Spacer()
         }
         .alert("Game Over", isPresented: $isGameOver) {
             Button("Restart", action: restartGame)
@@ -47,6 +59,7 @@ struct ContentView: View {
     }
     
     func selectMove(_ move: String) {
+        userMove = move;
         if(shouldWin && move == winningMoves[selected] || !shouldWin && move == losingMoves[selected]) {
             output = "Ooo wow congrats!"
             score += 5
@@ -73,7 +86,8 @@ struct ContentView: View {
     func restartGame() {
         score = 0
         numberOfQuestions = 10
-        output = "Waiting for first move"
+        output = "Let's play"
+        userMove = ""
         shuffle()
     }
 

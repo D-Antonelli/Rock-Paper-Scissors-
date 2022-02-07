@@ -12,7 +12,7 @@ struct ContentView: View {
     let winningMoves = ["Paper", "Scissors", "Rock"]
     let losingMoves = ["Scissors", "Rock", "Paper"]
     
-    @State private var winnerMove = "None"
+    @State private var score = 0
 
     @State private var selected = Int.random(in: 0..<3)
     @State private var shouldWin = Bool.random()
@@ -35,10 +35,8 @@ struct ContentView: View {
                 }
             }
             
-            Text("Your score")
-            Text("0")
+            Text("Your score is \(score)")
             Text(output)
-            Text(winnerMove)
         }
 
     }
@@ -46,8 +44,10 @@ struct ContentView: View {
     func selectMove(_ move: String) {
         if(shouldWin && move == winningMoves[selected] || !shouldWin && move == losingMoves[selected]) {
             output = "Ooo wow congrats!"
+            score += 5
         } else {
             output = "Dang! Wrong answer"
+            score -= 5
         }
         
     }

@@ -34,7 +34,7 @@ struct ContentView: View {
                 Text(emoji[moves[selected]]!)
                 Text(shouldWin ? "Win" : "Lose")
                 Text(userMove)
-            }.padding()
+            }.padding(80)
                 
             Text("Select a move")
             HStack {
@@ -48,7 +48,6 @@ struct ContentView: View {
                     selectMove("Scissors")
                 }
             }
-            .padding()
             Spacer()
         }
         .alert("Game Over", isPresented: $isGameOver) {

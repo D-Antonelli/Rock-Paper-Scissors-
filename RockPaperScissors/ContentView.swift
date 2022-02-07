@@ -13,11 +13,11 @@ struct ContentView: View {
     let losingMoves = ["Scissors", "Rock", "Paper"]
     
     @State private var score = 0
-    @State private var numberOfQuestions = 3;
+    @State private var numberOfQuestions = 10;
     @State private var isGameOver = false;
     @State private var selected = Int.random(in: 0..<3)
     @State private var shouldWin = Bool.random()
-    @State private var output = "No selection made"
+    @State private var output = "Waiting for first move"
     
     var body: some View {
         VStack{
@@ -72,7 +72,8 @@ struct ContentView: View {
     
     func restartGame() {
         score = 0
-        numberOfQuestions = 3
+        numberOfQuestions = 10
+        output = "Waiting for first move"
         shuffle()
     }
 

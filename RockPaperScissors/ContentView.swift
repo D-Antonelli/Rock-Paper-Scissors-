@@ -35,8 +35,8 @@ struct ContentView: View {
                 }
             }
             
-            Text("Your score is \(score)")
             Text(output)
+            Text("Your score is \(score)")
         }
 
     }
@@ -50,12 +50,19 @@ struct ContentView: View {
             score -= 5
         }
         
+        shuffle()
     }
     
+
+
+func shuffle() {
+    selected = Int.random(in: 0..<3)
+    shouldWin = Bool.random()
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
+}
 }

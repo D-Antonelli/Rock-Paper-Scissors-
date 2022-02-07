@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     let moves = ["Rock", "Paper", "Scissors"]
+    let winningMoves = ["Paper", "Scissors", "Rock"]
+    let losingMoves = ["Scissors", "Rock", "Paper"]
+    
     @State private var winnerMove = "None"
 
     @State private var selected = Int.random(in: 0..<3)
@@ -22,13 +25,13 @@ struct ContentView: View {
             
             HStack {
                 Button("Rock") {
-                    selectTool("Rock")
+                    selectMove("Rock")
                 }
                 Button("Paper") {
-                    selectTool("Paper")
+                    selectMove("Paper")
                 }
                 Button("Scissors") {
-                    selectTool("Scissors")
+                    selectMove("Scissors")
                 }
             }
             
@@ -40,27 +43,15 @@ struct ContentView: View {
 
     }
     
-    func selectTool(_ tool: String) {
-        output = "You've selected \(tool)"
-        var winningMoves = beating(moves: moves)
-        winnerMove = winningMoves[selected]
+    func selectMove(_ move: String) {
+        if(shouldWin && move == winningMoves[selected] || !shouldWin && move == losingMoves[selected]) {
+            output = "Ooo wow congrats!"
+        } else {
+            output = "Dang! Wrong answer"
+        }
+        
     }
     
-    func beating(moves: Array<String>) -> Array<String> {
-        var result: [String] = []
-        moves.forEach { move in
-            if(move == "Rock") {
-                result.append("Paper")
-            }
-            else if(move == "Paper") {
-                result.append("Scissors")
-            }
-            else if(move == "Scissors") {
-                result.append("Rock")
-            }
-        }
-        return result
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {

@@ -7,6 +7,23 @@
 
 import SwiftUI
 
+struct MoveButton: View {
+    var move: String
+    let action: (_ move: String) -> Void
+    
+    var body: some View {
+        Button() {
+            action(move)
+        }
+        label: {
+            Image(move)
+                .resizable()
+                .scaledToFit()
+        }
+        .frame(width: 60, height: 60, alignment: .center)
+    }
+}
+
 
 struct ContentView: View {
     let moves = ["Rock", "Paper", "Scissors"]
@@ -26,35 +43,45 @@ struct ContentView: View {
             Color.yellow
             .ignoresSafeArea()
        
-        VStack{
+            VStack {
 //            Text(output)
-//                    .font(.title)
-                Text("Total Score: \(score)")
-                .font(.title3)
-                .frame(minWidth: 0, maxWidth: .infinity,minHeight:0, maxHeight: 0 ,alignment: .topLeading)
-                .padding(.top)
-                .padding(.leading)
-            
-            VStack() {
-                Text(moves[computerMove]);
-                Text(shouldWin ? "Win" : "Lose")
-                    .font(.title)
-//                Text(userMove)
-            }
+                HStack {
+                    Text("Total Score: \(score)")
+                                    .font(.title3)
+                }                                    .frame(minWidth: 0, maxWidth: .infinity,minHeight:0, maxHeight: 30 ,alignment: .topLeading)
                 
-            HStack {
-                Button("Rock") {
-                    selectMove("Rock")
+                
+                HStack {
+                    Text(output)
+                        .font(.largeTitle)
                 }
-                Button("Paper") {
-                    selectMove("Paper")
+                .frame(minWidth: 0, maxWidth: .infinity,minHeight:0, maxHeight: 100 ,alignment: .center)
+                
+            
+                VStack() {
+                GeometryReader { geo in
+                    Image(moves[computerMove])
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: geo.size.width * 0.6)
+                        .frame(width: geo.size.width, height: geo.size.height)
                 }
-                Button("Scissors") {
-                    selectMove("Scissors")
-                }
+                Text(shouldWin ? "WIN" : "LOSE")
+                    .font(.largeTitle)
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 400, alignment: .center)
+            
+                Spacer()
+                HStack(spacing: 40) {
+                    ForEach(moves, id: \.self) {
+                        MoveButton(move: $0) { move in
+                            selectMove(move) }
+                    }
             }
             Spacer()
-        }
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+            .padding()
         .alert("Game Over", isPresented: $isGameOver) {
             Button("Restart", action: restartGame)
         } message: {
@@ -66,10 +93,10 @@ struct ContentView: View {
     func selectMove(_ move: String) {
         userMove = move;
         if(shouldWin && move == winningMoves[computerMove] || !shouldWin && move == losingMoves[computerMove]) {
-            output = "Ooo wow congrats!"
+            output = "Good move!"
             score += 1
         } else {
-            output = "Dang! Wrong answer"
+            output = "Dang!"
             score -= 1
         }
         

@@ -13,34 +13,35 @@ struct ContentView: View {
     let winningMoves = ["Paper", "Scissors", "Rock"]
     let losingMoves = ["Scissors", "Rock", "Paper"]
     
-    let emoji = ["Paper": "🧻", "Rock": "🪨", "Scissors": "✂️"]
-    
     @State private var score = 0
     @State private var numberOfQuestions = 10;
     @State private var isGameOver = false;
-    @State private var selected = Int.random(in: 0..<3)
+    @State private var computerMove = Int.random(in: 0..<3)
     @State private var shouldWin = Bool.random()
     @State private var userMove = "❓"
     @State private var output = "Let's Play"
     
     var body: some View {
+        ZStack {
+            Color.yellow
+            .ignoresSafeArea()
+       
         VStack{
-            Spacer()
-            Text(output)
-                    .font(.title)
-            Text("Total Score \(score)")
-                    .font(.largeTitle)
-            HStack() {
-                Text(emoji[moves[selected]]!)
-                    .padding()
+//            Text(output)
+//                    .font(.title)
+                Text("Total Score: \(score)")
+                .font(.title3)
+                .frame(minWidth: 0, maxWidth: .infinity,minHeight:0, maxHeight: 0 ,alignment: .topLeading)
+                .padding(.top)
+                .padding(.leading)
+            
+            VStack() {
+                Text(moves[computerMove]);
                 Text(shouldWin ? "Win" : "Lose")
-                    .padding()
                     .font(.title)
-                Text(userMove)
-                    .padding()
-            }.padding(70)
+//                Text(userMove)
+            }
                 
-            Text("Select a move")
             HStack {
                 Button("Rock") {
                     selectMove("Rock")
@@ -60,10 +61,11 @@ struct ContentView: View {
             Text("Your total score is \(score)")
         }
     }
+    }
     
     func selectMove(_ move: String) {
         userMove = move;
-        if(shouldWin && move == winningMoves[selected] || !shouldWin && move == losingMoves[selected]) {
+        if(shouldWin && move == winningMoves[computerMove] || !shouldWin && move == losingMoves[computerMove]) {
             output = "Ooo wow congrats!"
             score += 1
         } else {
@@ -82,7 +84,7 @@ struct ContentView: View {
     
 
     func shuffle() {
-        selected = Int.random(in: 0..<3)
+        computerMove = Int.random(in: 0..<3)
         shouldWin = Bool.random()
     }
     

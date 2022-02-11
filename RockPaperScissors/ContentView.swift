@@ -47,13 +47,16 @@ struct ContentView: View {
 //            Text(output)
                 HStack {
                     Text("Total Score: \(score)")
-                                    .font(.title3)
+                        .font(.title3)
+                        .foregroundColor(.black)
+                                    
                 }                                    .frame(minWidth: 0, maxWidth: .infinity,minHeight:0, maxHeight: 30 ,alignment: .topLeading)
                 
                 
                 HStack {
                     Text(output)
                         .font(.largeTitle)
+                        .foregroundColor(.black)
                 }
                 .frame(minWidth: 0, maxWidth: .infinity,minHeight:0, maxHeight: 100 ,alignment: .center)
                 
@@ -68,10 +71,13 @@ struct ContentView: View {
                 }
                 Text(shouldWin ? "WIN" : "LOSE")
                     .font(.largeTitle)
+                    .foregroundColor(.black)
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 400, alignment: .center)
             
                 Spacer()
+                Text("Select your move")
+                    .padding()
                 HStack(spacing: 40) {
                     ForEach(moves, id: \.self) {
                         MoveButton(move: $0) { move in
